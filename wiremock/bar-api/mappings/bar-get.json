@@ -1,0 +1,12 @@
+{
+  "request": {
+    "urlPathPattern": "/bar/.+"
+  },
+  "response": {
+    "status": 200,
+    "body": "Hello {{request.pathSegments.[1]}} I am Bar!",
+    "headers" : {
+      "Content-Type": "text/plain"
+    }
+  }
+}

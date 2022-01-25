@@ -5,7 +5,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
-import com.github.tomakehurst.wiremock.junit5.WireMockExtension.*
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension.newInstance
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -15,6 +15,8 @@ import org.junit.jupiter.api.extension.RegisterExtension
 @TestInstance(PER_CLASS)
 class AppShouldWithTwoWireMockExtensions {
 
+  private val name = "Leo"
+
   @RegisterExtension
   val wireMockFoo: WireMockExtension = newInstance().build()
 
@@ -23,7 +25,6 @@ class AppShouldWithTwoWireMockExtensions {
 
   @Test
   fun `call foo and bar`() {
-    val name = "Helen"
     wireMockFoo.stubFor(
       get(WireMock.urlPathEqualTo("/foo"))
         .withQueryParam("name", equalTo(name))
@@ -35,6 +36,7 @@ class AppShouldWithTwoWireMockExtensions {
     )
 
     val app = App(name, wireMockFoo.baseUrl(), wireMockBar.baseUrl())
+
     assertThat(app.execute()).isEqualTo(
       """
         Hi! I am $name

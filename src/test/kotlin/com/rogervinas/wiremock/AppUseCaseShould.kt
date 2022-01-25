@@ -7,14 +7,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-private const val NAME = "Joe"
-private const val FOO_RESPONSE = "Hi I am Foo"
-private const val FOO_ERROR = "Sorry Foo failed"
-private const val BAR_RESPONSE = "Hi I am Bar"
-private const val BAR_ERROR = "Sorry Bar failed"
-
 @ExtendWith(MockKExtension::class)
 class AppUseCaseShould {
+
+  private val name = "Tim"
+  private val fooResponse = "Hi I am Foo"
+  private val fooError = "Sorry Foo failed"
+  private val barResponse = "Hi I am Bar"
+  private val barError = "Sorry Bar failed"
 
   @MockK
   lateinit var fooClient: FooClient
@@ -24,13 +24,13 @@ class AppUseCaseShould {
 
   @Test
   fun `call foo and bar`() {
-    every { fooClient.call(NAME) } returns FOO_RESPONSE
-    every { barClient.call(NAME) } returns BAR_RESPONSE
-    assertThat(AppUseCase().execute(NAME, fooClient, barClient)).isEqualTo(
+    every { fooClient.call(name) } returns fooResponse
+    every { barClient.call(name) } returns barResponse
+    assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $NAME
-        I called Foo and its response is $FOO_RESPONSE
-        I called Bar and its response is $BAR_RESPONSE
+        Hi! I am $name
+        I called Foo and its response is $fooResponse
+        I called Bar and its response is $barResponse
         Bye!
       """.trimIndent()
     )
@@ -38,13 +38,13 @@ class AppUseCaseShould {
 
   @Test
   fun `call foo and bar even if foo fails`() {
-    every { fooClient.call(NAME) } throws Exception(FOO_ERROR)
-    every { barClient.call(NAME) } returns BAR_RESPONSE
-    assertThat(AppUseCase().execute(NAME, fooClient, barClient)).isEqualTo(
+    every { fooClient.call(name) } throws Exception(fooError)
+    every { barClient.call(name) } returns barResponse
+    assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $NAME
-        I called Foo and it failed with $FOO_ERROR
-        I called Bar and its response is $BAR_RESPONSE
+        Hi! I am $name
+        I called Foo and it failed with $fooError
+        I called Bar and its response is $barResponse
         Bye!
       """.trimIndent()
     )
@@ -52,13 +52,13 @@ class AppUseCaseShould {
 
   @Test
   fun `call foo and bar even if bar fails`() {
-    every { fooClient.call(NAME) } returns FOO_RESPONSE
-    every { barClient.call(NAME) } throws Exception(BAR_ERROR)
-    assertThat(AppUseCase().execute(NAME, fooClient, barClient)).isEqualTo(
+    every { fooClient.call(name) } returns fooResponse
+    every { barClient.call(name) } throws Exception(barError)
+    assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $NAME
-        I called Foo and its response is $FOO_RESPONSE
-        I called Bar and it failed with $BAR_ERROR
+        Hi! I am $name
+        I called Foo and its response is $fooResponse
+        I called Bar and it failed with $barError
         Bye!
       """.trimIndent()
     )
@@ -66,13 +66,13 @@ class AppUseCaseShould {
 
   @Test
   fun `call foo and bar even if both fail`() {
-    every { fooClient.call(NAME) } throws Exception(FOO_ERROR)
-    every { barClient.call(NAME) } throws Exception(BAR_ERROR)
-    assertThat(AppUseCase().execute(NAME, fooClient, barClient)).isEqualTo(
+    every { fooClient.call(name) } throws Exception(fooError)
+    every { barClient.call(name) } throws Exception(barError)
+    assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $NAME
-        I called Foo and it failed with $FOO_ERROR
-        I called Bar and it failed with $BAR_ERROR
+        Hi! I am $name
+        I called Foo and it failed with $fooError
+        I called Bar and it failed with $barError
         Bye!
       """.trimIndent()
     )

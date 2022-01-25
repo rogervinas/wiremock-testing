@@ -285,6 +285,7 @@ That was a good one! Happy coding! 💙
 
 ## Test this demo
 
+>>>>>>> master
 ```shell
 ./gradlew test
 ```
