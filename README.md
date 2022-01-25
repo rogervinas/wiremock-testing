@@ -2,8 +2,16 @@
 
 # WireMock Testing
 
-Work in progress
+## Test this demo
 
-* https://wiremock.org/docs/junit-jupiter/
-* https://wiremock.org/docs/docker/
-* http://wiremock.org/docs/response-templating/
+```shell
+./gradlew test
+```
+
+## Run this demo
+
+```
+docker compose up -d
+./gradlew run
+docker compose down
+```

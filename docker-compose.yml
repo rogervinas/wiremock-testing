@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+  foo-api:
+    image: wiremock/wiremock:2.32.0
+    ports:
+      - "8080"
+    command:
+      - "--global-response-templating"
+    volumes:
+      - ./wiremock/foo-api:/home/wiremock
+
+  bar-api:
+    image: wiremock/wiremock:2.32.0
+    ports:
+      - "8080"
+    command:
+      - "--global-response-templating"
+    volumes:
+      - ./wiremock/bar-api:/home/wiremock

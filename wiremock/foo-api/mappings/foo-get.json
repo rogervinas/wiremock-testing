@@ -1,0 +1,17 @@
+{
+  "request": {
+    "urlPath": "/foo",
+    "queryParameters" : {
+      "name" : {
+        "matches" : ".+"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": "Hello {{request.query.name}} I am Foo!",
+    "headers" : {
+      "Content-Type": "text/plain"
+    }
+  }
+}

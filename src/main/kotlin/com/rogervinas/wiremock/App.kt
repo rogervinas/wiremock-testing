@@ -2,11 +2,11 @@ package com.rogervinas.wiremock
 
 class App(
   private val name: String,
-  private val fooUrl: String,
-  private val barUrl: String
+  private val fooApiUrl: String,
+  private val barApiUrl: String
 ) {
 
-  fun execute() = AppUseCase().execute(name, FooKtorClient(fooUrl), BarKtorClient(barUrl))
+  fun execute() = AppUseCase().execute(name, FooKtorClient(fooApiUrl), BarKtorClient(barApiUrl))
 }
 
 fun main() {
