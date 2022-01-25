@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -15,10 +16,10 @@ import org.junit.jupiter.api.extension.RegisterExtension
 class AppShouldWithTwoWireMockExtensions {
 
   @RegisterExtension
-  val wireMockFoo: WireMockExtension = WireMockExtension.newInstance().build()
+  val wireMockFoo: WireMockExtension = newInstance().build()
 
   @RegisterExtension
-  val wireMockBar: WireMockExtension = WireMockExtension.newInstance().build()
+  val wireMockBar: WireMockExtension = newInstance().build()
 
   @Test
   fun `call foo and bar`() {

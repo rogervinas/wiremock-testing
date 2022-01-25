@@ -14,14 +14,14 @@ import org.junit.jupiter.api.Test
 class BarKtorClientShould {
 
   @Test
-  fun `call bar api`(wireMockRuntimeInfo: WireMockRuntimeInfo) {
+  fun `call bar api`(wm: WireMockRuntimeInfo) {
     stubFor(
       get(urlPathMatching("/bar/Sue"))
         .willReturn(ok().withBody("Hello Sue I am Bar!"))
     )
 
-    assertThat(BarKtorClient(wireMockRuntimeInfo.httpBaseUrl).call("Sue"))
-      .isEqualTo("Hello Sue I am Bar!")
+    assertThat(BarKtorClient(wm.httpBaseUrl).call(name))
+      .isEqualTo("Hello $name I am Bar!")
   }
 
   @Test
