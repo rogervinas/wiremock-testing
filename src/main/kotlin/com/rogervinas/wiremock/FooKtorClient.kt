@@ -10,15 +10,13 @@ class FooKtorClient(private val url: String) : FooClient {
 
   private val client = HttpClient(CIO)
 
-  override fun call(name: String): String {
-    return runBlocking {
-      try {
-        client.get("$url/foo") {
-          parameter("name", name)
-        }
-      } catch (e: Exception) {
-        "Foo api error: ${e.message}"
+  override fun call(name: String): String = runBlocking {
+    try {
+      client.get("$url/foo") {
+        parameter("name", name)
       }
+    } catch (e: Exception) {
+      "Foo api error: ${e.message}"
     }
   }
 }

@@ -16,14 +16,14 @@ class BarKtorClientShould {
   private val name = "Sue"
 
   @Test
-  fun `call bar api`(wireMockRuntimeInfo: WireMockRuntimeInfo) {
+  fun `call bar api`(wm: WireMockRuntimeInfo) {
     stubFor(
       get(urlPathMatching("/bar/$name"))
         .willReturn(ok().withBody("Hello $name I am Bar!"))
     )
 
-    assertThat(BarKtorClient(wireMockRuntimeInfo.httpBaseUrl).call("Sue"))
-      .isEqualTo("Hello Sue I am Bar!")
+    assertThat(BarKtorClient(wm.httpBaseUrl).call(name))
+      .isEqualTo("Hello $name I am Bar!")
   }
 
   @Test
