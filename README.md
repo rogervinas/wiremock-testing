@@ -7,11 +7,17 @@
 - Declarative with **@WireMockTest**
 - Programmatic with **WireMockExtension**
 
+And **WireMock** also has an [official Docker image](https://hub.docker.com/r/wiremock/wiremock)!
+
 But "talk is cheap, show me the code [...](https://www.goodreads.com/quotes/437173-talk-is-cheap-show-me-the-code#:~:text=Quote%20by%20Linus%20Torvalds%3A%20%E2%80%9CTalk,Show%20me%20the%20code.%E2%80%9D)" 😮
 
-Ok so let's implement this scenario:
+Ok so let's implement first the scenario with **@WireMockTest**:
 
 ![WireMockTest](doc/WireMockTest.png)
+
+And later the one with [WireMock's official Docker image](https://hub.docker.com/r/wiremock/wiremock):
+
+![WireMockDockerTest](doc/WireMockDockerTest.png)
 
 * [BarClient](#barclient)
   * [BarClient interface](#barclient-interface)
@@ -26,6 +32,8 @@ Ok so let's implement this scenario:
   * [App implementation](#app-implementation)
   * [App test with @WireMockTest](#app-test-with-wiremocktest)
   * [App test with WireMockExtension](#app-test-with-wiremockextension)
+  * [App test with WireMock Docker](#app-test-with-wiremock-docker)
+  * [App run with WireMock Docker](#app-run-with-wiremock-docker)
 * [Test this demo](#test-this-demo)
 * [Run this demo](#run-this-demo)
 
@@ -280,6 +288,71 @@ class AppShouldWithTwoWireMockExtensions {
  }
 }
 ```
+
+## App test with WireMock Docker
+
+In our [docker-compose.yml](docker-compose.yml):
+* We configure two **WireMock** containers, one for **Foo API** and one for **Bar API**.
+* We use dynamic ports for each container.
+* We enable [response templating](https://wiremock.org/docs/response-templating/) adding the parameter `--global-response-templating` (see [command line options](http://wiremock.org/docs/running-standalone/)).
+* We mount as volumes the directories containing the **WireMock** mappings: [foo-api/mappings](wiremock/foo-api/mappings) and [bar-api/mappings](wiremock/bar-api/mappings).
+
+Finally we test the **App** using [Testcontainers JUnit5 extension](https://www.testcontainers.org/test_framework_integration/junit_5/):
+
+```kotlin
+@Testcontainers
+@TestInstance(PER_CLASS)
+class AppShouldWithWireMockDocker {
+
+ private val name = "Ivy"
+
+ private val fooServiceName = "foo-api"
+ private val fooServicePort = 8080
+ private val barServiceName = "bar-api"
+ private val barServicePort = 8080
+
+ @Container
+ val container = DockerComposeContainer<Nothing>(File("docker-compose.yml"))
+  .apply {
+   withLocalCompose(true)
+   withExposedService(fooServiceName, fooServicePort, Wait.forListeningPort())
+   withExposedService(barServiceName, barServicePort, Wait.forListeningPort())
+  }
+
+ @Test
+ fun `call foo and bar`() {
+  val fooApiHost = container.getServiceHost(fooServiceName, fooServicePort)
+  val fooApiPort = container.getServicePort(fooServiceName, fooServicePort)
+  val barApiHost = container.getServiceHost(barServiceName, barServicePort)
+  val barApiPort = container.getServicePort(barServiceName, barServicePort)
+
+  val fooApiUrl = "http://${fooApiHost}:${fooApiPort}"
+  val barApiUrl = "http://${barApiHost}:${barApiPort}"
+
+  val app = App(name, fooApiUrl, barApiUrl)
+
+  assertThat(app.execute()).isEqualTo(
+   """
+    Hi! I am $name
+    I called Foo and its response is Hello $name I am Foo!
+    I called Bar and its response is Hello $name I am Bar!
+    Bye!
+   """.trimIndent()
+  )
+ }
+}
+```
+
+With this testing approach we cannot configure our stubs programmatically like we did in [testing with @WireMockTest](#app-test-with-wiremocktest) or [testing with WireMockExtension](#app-test-with-wiremockextension).
+Instead, we have to configure them as json files under mappings directory and we have to use mechanisms such as [response templating](http://wiremock.org/docs/response-templating/) or [stateful behaviour](http://wiremock.org/docs/stateful-behaviour/).
+
+## App run with WireMock Docker
+
+**WireMock** with **Docker** has a cool advantage, we can use the same **docker-compose** used by the test to start the application and run/debug it locally:
+
+![WireMockDockerRun](doc/WireMockDockerRun.png)
+
+In this case we only need to use fixed ports, configuring them in [docker-compose.override.yml](docker-compose.override.yml). This override does not affect **@Testcontainers**.
 
 That was a good one! Happy coding! 💙
 
