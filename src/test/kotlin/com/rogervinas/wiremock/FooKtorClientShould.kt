@@ -17,6 +17,8 @@ import org.junit.jupiter.api.extension.RegisterExtension
 @TestInstance(PER_CLASS)
 class FooKtorClientShould {
 
+  private val name = "Joe"
+
   @RegisterExtension
   val wireMock: WireMockExtension = WireMockExtension.newInstance()
     .options(wireMockConfig().extensions(ResponseTemplateTransformer(true)))
@@ -30,8 +32,8 @@ class FooKtorClientShould {
         .willReturn(ok().withBody("Hello {{request.query.name}} I am Foo!"))
     )
 
-    assertThat(FooKtorClient(wireMock.baseUrl()).call("John"))
-      .isEqualTo("Hello John I am Foo!")
+    assertThat(FooKtorClient(wireMock.baseUrl()).call(name))
+      .isEqualTo("Hello $name I am Foo!")
   }
 
   @Test
@@ -41,7 +43,7 @@ class FooKtorClientShould {
         .willReturn(WireMock.serverError())
     )
 
-    assertThat(FooKtorClient(wireMock.baseUrl()).call("John"))
+    assertThat(FooKtorClient(wireMock.baseUrl()).call(name))
       .startsWith("Foo api error: Server error")
   }
 }

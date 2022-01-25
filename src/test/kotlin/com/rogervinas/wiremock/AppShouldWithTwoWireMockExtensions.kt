@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.RegisterExtension
 @TestInstance(PER_CLASS)
 class AppShouldWithTwoWireMockExtensions {
 
+  private val name = "Leo"
+
   @RegisterExtension
   val wireMockFoo: WireMockExtension = WireMockExtension.newInstance().build()
 
@@ -22,7 +24,6 @@ class AppShouldWithTwoWireMockExtensions {
 
   @Test
   fun `call foo and bar`() {
-    val name = "Helen"
     wireMockFoo.stubFor(
       get(WireMock.urlPathEqualTo("/foo"))
         .withQueryParam("name", equalTo(name))
@@ -34,6 +35,7 @@ class AppShouldWithTwoWireMockExtensions {
     )
 
     val app = App(name, wireMockFoo.baseUrl(), wireMockBar.baseUrl())
+
     assertThat(app.execute()).isEqualTo(
       """
         Hi! I am $name

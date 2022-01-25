@@ -13,9 +13,10 @@ import org.junit.jupiter.api.Test
 @WireMockTest
 class AppShouldWithOneWireMockTest {
 
+  private val name = "Ada"
+
   @Test
   fun `call foo and bar`(wireMockRuntime: WireMockRuntimeInfo) {
-    val name = "Peter"
     stubFor(
       get(WireMock.urlPathEqualTo("/foo"))
         .withQueryParam("name", equalTo(name))
@@ -27,6 +28,7 @@ class AppShouldWithOneWireMockTest {
     )
 
     val app = App(name, wireMockRuntime.httpBaseUrl, wireMockRuntime.httpBaseUrl)
+
     assertThat(app.execute()).isEqualTo(
       """
         Hi! I am $name

@@ -20,6 +20,8 @@ dependencies {
   testImplementation("io.mockk:mockk:1.12.2")
   testImplementation("org.assertj:assertj-core:3.22.0")
   testImplementation("com.github.tomakehurst:wiremock-jre8:2.32.0")
+  testImplementation("org.testcontainers:testcontainers:1.16.2")
+  testImplementation("org.testcontainers:junit-jupiter:1.16.2")
 }
 
 kotlin {
