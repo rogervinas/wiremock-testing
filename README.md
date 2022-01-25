@@ -11,7 +11,7 @@ But "talk is cheap, show me the code [...](https://www.goodreads.com/quotes/4371
 
 Ok so let's implement this scenario:
 
-![WireMockTest](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mi4p3w5oalczqpm7duwr.png)
+![WireMockTest](doc/WireMockTest.png)
 
 * [BarClient](#barclient)
   * [BarClient interface](#barclient-interface)
