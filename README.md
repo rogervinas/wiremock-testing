@@ -33,6 +33,8 @@ And later the one with [WireMock's official Docker image](https://hub.docker.com
   * [App test with @WireMockTest](#app-test-with-wiremocktest)
   * [App test with WireMockExtension](#app-test-with-wiremockextension)
   * [App test with WireMock Docker](#app-test-with-wiremock-docker)
+    * [Static stubs](#static-stubs)
+    * [Dynamic stubs](#dynamic-stubs)
   * [App run with WireMock Docker](#app-run-with-wiremock-docker)
 * [Test this demo](#test-this-demo)
 * [Run this demo](#run-this-demo)
@@ -291,6 +293,10 @@ class AppShouldWithTwoWireMockExtensions {
 
 ## App test with WireMock Docker
 
+### Static stubs
+
+First we will use static stubs configured as json files:
+
 In our [docker-compose.yml](docker-compose.yml):
 * We configure two **WireMock** containers, one for **Foo API** and one for **Bar API**.
 * We use dynamic ports for each container.
@@ -304,28 +310,39 @@ Finally we test the **App** using [Testcontainers JUnit5 extension](https://www.
 @TestInstance(PER_CLASS)
 class AppShouldWithWireMockDocker {
 
- private val name = "Ivy"
-
- private val fooServiceName = "foo-api"
- private val fooServicePort = 8080
- private val barServiceName = "bar-api"
- private val barServicePort = 8080
-
- @Container
- val container = DockerComposeContainer<Nothing>(File("docker-compose.yml"))
-  .apply {
-   withLocalCompose(true)
-   withExposedService(fooServiceName, fooServicePort, Wait.forListeningPort())
-   withExposedService(barServiceName, barServicePort, Wait.forListeningPort())
+ companion object {
+  private const val name = "Ivy" 
+  private const val fooServiceName = "foo-api"
+  private const val fooServicePort = 8080
+  private const val barServiceName = "bar-api"
+  private const val barServicePort = 8080
+  private lateinit var fooApiHost: String
+  private var fooApiPort: Int = 0
+  private lateinit var barApiHost: String
+  private var barApiPort: Int = 0
+   
+  @Container
+  @JvmStatic
+  val container = DockerComposeContainer<Nothing>(File("docker-compose.yml"))
+   .apply {
+    withLocalCompose(true)
+    withExposedService(fooServiceName, fooServicePort, forListeningPort())
+    withExposedService(barServiceName, barServicePort, forListeningPort())
+    withLogConsumer()
+   }
+   
+  @BeforeAll
+  @JvmStatic
+  fun beforeAll() {
+    fooApiHost = container.getServiceHost(fooServiceName, fooServicePort)
+    fooApiPort = container.getServicePort(fooServiceName, fooServicePort)
+    barApiHost = container.getServiceHost(barServiceName, barServicePort)
+    barApiPort = container.getServicePort(barServiceName, barServicePort)
   }
+ }
 
  @Test
  fun `call foo and bar`() {
-  val fooApiHost = container.getServiceHost(fooServiceName, fooServicePort)
-  val fooApiPort = container.getServicePort(fooServiceName, fooServicePort)
-  val barApiHost = container.getServiceHost(barServiceName, barServicePort)
-  val barApiPort = container.getServicePort(barServiceName, barServicePort)
-
   val fooApiUrl = "http://${fooApiHost}:${fooApiPort}"
   val barApiUrl = "http://${barApiHost}:${barApiPort}"
 
@@ -343,8 +360,39 @@ class AppShouldWithWireMockDocker {
 }
 ```
 
-With this testing approach we cannot configure our stubs programmatically like we did in [testing with @WireMockTest](#app-test-with-wiremocktest) or [testing with WireMockExtension](#app-test-with-wiremockextension).
-Instead, we have to configure them as json files under mappings directory and we have to use mechanisms such as [response templating](http://wiremock.org/docs/response-templating/) or [stateful behaviour](http://wiremock.org/docs/stateful-behaviour/).
+### Dynamic stubs
+
+We can also configure our stubs programmatically like we did in [testing with @WireMockTest](#app-test-with-wiremocktest) or [testing with WireMockExtension](#app-test-with-wiremockextension).
+
+To do so we have to use the [WireMock client](https://wiremock.org/docs/java-usage) and connect it to the [WireMock Admin API](https://wiremock.org/docs/api/) of the two **WireMock** containers:
+
+```kotlin
+@Test
+fun `call foo an bar with dynamic stubs`() {
+ val fooApiUrl = "http://${fooApiHost}:${fooApiPort}/dynamic"
+ val barApiUrl = "http://${barApiHost}:${barApiPort}/dynamic"
+  
+ WireMock(fooApiHost, fooApiPort)
+  .register(get(urlPathEqualTo("/dynamic/foo"))
+   .withQueryParam("name", WireMock.equalTo(name))
+   .willReturn(ok().withBody("Hi $name I am Foo, how are you?"))
+ )
+ WireMock(barApiHost, barApiPort)
+  .register(get(urlPathMatching("/dynamic/bar/$name"))
+   .willReturn(ok().withBody("Hi $name I am Bar, nice to meet you!"))
+ )
+ 
+ val app = App(name, fooApiUrl, barApiUrl)
+ assertThat(app.execute()).isEqualTo(
+   """
+     Hi! I am $name
+     I called Foo and its response is Hi $name I am Foo, how are you?
+     I called Bar and its response is Hi $name I am Bar, nice to meet you!
+     Bye!
+   """.trimIndent()
+ )
+}
+```
 
 ## App run with WireMock Docker
 

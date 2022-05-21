@@ -1,9 +1,7 @@
 package com.rogervinas.wiremock
 
 import com.github.tomakehurst.wiremock.client.WireMock
-import com.github.tomakehurst.wiremock.client.WireMock.equalTo
-import com.github.tomakehurst.wiremock.client.WireMock.get
-import com.github.tomakehurst.wiremock.client.WireMock.ok
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension.newInstance
 import org.assertj.core.api.Assertions.assertThat
@@ -26,12 +24,12 @@ class AppShouldWithTwoWireMockExtensions {
   @Test
   fun `call foo and bar`() {
     wireMockFoo.stubFor(
-      get(WireMock.urlPathEqualTo("/foo"))
+      get(urlPathEqualTo("/foo"))
         .withQueryParam("name", equalTo(name))
         .willReturn(ok().withBody("Hello $name I am Foo!"))
     )
     wireMockBar.stubFor(
-      get(WireMock.urlPathMatching("/bar/$name"))
+      get(urlPathMatching("/bar/$name"))
         .willReturn(ok().withBody("Hello $name I am Bar!"))
     )
 
