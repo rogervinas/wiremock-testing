@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import org.testcontainers.containers.DockerComposeContainer
-import org.testcontainers.containers.wait.strategy.Wait
+import org.testcontainers.containers.wait.strategy.Wait.forListeningPort
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.io.File
@@ -35,8 +35,8 @@ class AppShouldWithWireMockDocker {
     val container = DockerComposeContainer<Nothing>(File("docker-compose.yml"))
           .apply {
             withLocalCompose(true)
-            withExposedService(fooServiceName, fooServicePort, Wait.forListeningPort())
-            withExposedService(barServiceName, barServicePort, Wait.forListeningPort())
+            withExposedService(fooServiceName, fooServicePort, forListeningPort())
+            withExposedService(barServiceName, barServicePort, forListeningPort())
           }
 
     @BeforeAll
