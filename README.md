@@ -33,6 +33,8 @@ And later the one with [WireMock's official Docker image](https://hub.docker.com
   * [App test with @WireMockTest](#app-test-with-wiremocktest)
   * [App test with WireMockExtension](#app-test-with-wiremockextension)
   * [App test with WireMock Docker](#app-test-with-wiremock-docker)
+    * [Static stubs](#static-stubs)
+    * [Dynamic stubs](#dynamic-stubs)
   * [App run with WireMock Docker](#app-run-with-wiremock-docker)
 * [Test this demo](#test-this-demo)
 * [Run this demo](#run-this-demo)
@@ -291,6 +293,10 @@ class AppShouldWithTwoWireMockExtensions {
 
 ## App test with WireMock Docker
 
+### Static stubs
+
+First we will use static stubs configured as json files:
+
 In our [docker-compose.yml](docker-compose.yml):
 * We configure two **WireMock** containers, one for **Foo API** and one for **Bar API**.
 * We use dynamic ports for each container.
@@ -343,8 +349,14 @@ class AppShouldWithWireMockDocker {
 }
 ```
 
-With this testing approach we cannot configure our stubs programmatically like we did in [testing with @WireMockTest](#app-test-with-wiremocktest) or [testing with WireMockExtension](#app-test-with-wiremockextension).
-Instead, we have to configure them as json files under mappings directory and we have to use mechanisms such as [response templating](http://wiremock.org/docs/response-templating/) or [stateful behaviour](http://wiremock.org/docs/stateful-behaviour/).
+### Dynamic stubs
+
+We can also configure our stubs programmatically like we did in [testing with @WireMockTest](#app-test-with-wiremocktest) or [testing with WireMockExtension](#app-test-with-wiremockextension).
+
+To do so we have to use the [WireMock client](https://wiremock.org/docs/java-usage) and connect it to the [WireMock Admin API](https://wiremock.org/docs/api/):
+
+```kotlin
+```
 
 ## App run with WireMock Docker
 
