@@ -2,7 +2,7 @@
 
 # WireMock Testing
 
-[WireMock](http://wiremock.org/) is a great library to mock APIs in your tests and supports [Junit5](http://wiremock.org/docs/junit-jupiter/) with two modes:
+[WireMock](https://wiremock.org/) is a great library to mock APIs in your tests and supports [Junit5](https://wiremock.org/docs/junit-jupiter/) with two modes:
 
 - Declarative with **@WireMockTest**
 - Programmatic with **WireMockExtension**
@@ -300,7 +300,7 @@ First we will use static stubs configured as json files:
 In our [docker-compose.yml](docker-compose.yml):
 * We configure two **WireMock** containers, one for **Foo API** and one for **Bar API**.
 * We use dynamic ports for each container.
-* We enable [response templating](https://wiremock.org/docs/response-templating/) adding the parameter `--global-response-templating` (see [command line options](http://wiremock.org/docs/running-standalone/)).
+* We enable [response templating](https://wiremock.org/docs/response-templating/) adding the parameter `--global-response-templating` (see [command line options](https://wiremock.org/docs/running-standalone/)).
 * We mount as volumes the directories containing the **WireMock** mappings: [foo-api/mappings](wiremock/foo-api/mappings) and [bar-api/mappings](wiremock/bar-api/mappings).
 
 Finally we test the **App** using [Testcontainers JUnit5 extension](https://www.testcontainers.org/test_framework_integration/junit_5/):
