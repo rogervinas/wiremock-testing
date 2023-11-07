@@ -1,5 +1,5 @@
 [![CI](https://github.com/rogervinas/wiremock-testing/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/rogervinas/wiremock-testing/actions/workflows/gradle.yml)
-![JAVA](https://img.shields.io/badge/JAVA-17-?labelColor=black&color=blue)
+![JAVA](https://img.shields.io/badge/JAVA-17-blue?labelColor=black)
 
 # WireMock Testing
 
