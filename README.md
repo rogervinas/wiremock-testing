@@ -402,7 +402,7 @@ fun `call foo an bar with dynamic stubs`() {
 
 **WireMock** with **Docker** has a cool advantage, we can use the same **docker-compose** used by the test to start the application and run/debug it locally:
 
-![WireMockDockerComposeRun](doc/WireMockDockerComposeRun.png)
+![WireMockDockerRun](doc/WireMockDockerRun.png)
 
 In this case we only need to use fixed ports, configuring them in [docker-compose.override.yml](docker-compose.override.yml). This override does not affect **@Testcontainers**.
 
