@@ -1,7 +1,10 @@
 package com.rogervinas.wiremock
 
 import com.github.tomakehurst.wiremock.client.WireMock
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock.get
+import com.github.tomakehurst.wiremock.client.WireMock.ok
+import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
+import com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -15,7 +18,7 @@ import java.io.File
 
 @Testcontainers
 @TestInstance(PER_CLASS)
-class AppShouldWithWireMockDocker {
+class AppShouldWithComposeTestcontainers {
 
   companion object {
     private const val name = "Ivy"

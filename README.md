@@ -6,11 +6,14 @@
 # WireMock Testing
 
 [WireMock](https://wiremock.org/) is a great library to mock APIs in your tests and supports [Junit5](https://wiremock.org/docs/junit-jupiter/) with two modes:
-
 - Declarative with **@WireMockTest**
 - Programmatic with **WireMockExtension**
 
-And **WireMock** also has an [official Docker image](https://hub.docker.com/r/wiremock/wiremock)!
+And **WireMock** also has:
+- A [Docker image](https://hub.docker.com/r/wiremock/wiremock)!
+- A [Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)!
+
+(you can also check [other supported technologies](https://wiremock.org/docs/#:~:text=By%20technology))
 
 But "talk is cheap, show me the code [...](https://www.goodreads.com/quotes/437173-talk-is-cheap-show-me-the-code#:~:text=Quote%20by%20Linus%20Torvalds%3A%20%E2%80%9CTalk,Show%20me%20the%20code.%E2%80%9D)" 😮
 
@@ -18,7 +21,9 @@ Ok so let's implement first the scenario with **@WireMockTest**:
 
 ![WireMockTest](doc/WireMockTest.png)
 
-And later the one with [WireMock's official Docker image](https://hub.docker.com/r/wiremock/wiremock):
+And later the one with [@Testcontainers](https://testcontainers.com/) and these two alternatives:
+1. Generic [Compose Testcontainers module](https://java.testcontainers.org/modules/docker_compose/#compose-v2) using [official WireMock's docker image](https://hub.docker.com/r/wiremock/wiremock)
+2. [WireMock's Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)
 
 ![WireMockDockerTest](doc/WireMockDockerTest.png)
 
@@ -35,10 +40,11 @@ And later the one with [WireMock's official Docker image](https://hub.docker.com
   * [App implementation](#app-implementation)
   * [App test with @WireMockTest](#app-test-with-wiremocktest)
   * [App test with WireMockExtension](#app-test-with-wiremockextension)
-  * [App test with WireMock Docker](#app-test-with-wiremock-docker)
+  * [App test with Compose Testcontainers module](#app-test-with-compose-testcontainers-module)
     * [Static stubs](#static-stubs)
     * [Dynamic stubs](#dynamic-stubs)
-  * [App run with WireMock Docker](#app-run-with-wiremock-docker)
+  * [App test with WireMock Testcontainers module](#app-test-with-wiremock-testcontainers-module)
+  * [App run with WireMock container and Docker Compose](#app-run-with-wiremock-container-and-docker-compose)
 * [Test this demo](#test-this-demo)
 * [Run this demo](#run-this-demo)
 
@@ -294,9 +300,9 @@ class AppShouldWithTwoWireMockExtensions {
 }
 ```
 
-## App test with WireMock Docker
+### App test with Compose Testcontainers module
 
-### Static stubs
+#### Static stubs
 
 First we will use static stubs configured as json files:
 
@@ -311,7 +317,7 @@ Finally we test the **App** using [Testcontainers JUnit5 extension](https://www.
 ```kotlin
 @Testcontainers
 @TestInstance(PER_CLASS)
-class AppShouldWithWireMockDocker {
+class AppShouldWithComposeTestcontainers {
 
  companion object {
   private const val name = "Ivy" 
@@ -326,13 +332,10 @@ class AppShouldWithWireMockDocker {
    
   @Container
   @JvmStatic
-  val container = DockerComposeContainer<Nothing>(File("docker-compose.yml"))
-   .apply {
-    withLocalCompose(true)
-    withExposedService(fooServiceName, fooServicePort, forListeningPort())
-    withExposedService(barServiceName, barServicePort, forListeningPort())
-    withLogConsumer()
-   }
+  val container = ComposeContainer(File("docker-compose.yml"))
+    .withLocalCompose(true)
+    .withExposedService(fooServiceName, fooServicePort, forListeningPort())
+    .withExposedService(barServiceName, barServicePort, forListeningPort())
    
   @BeforeAll
   @JvmStatic
@@ -363,7 +366,7 @@ class AppShouldWithWireMockDocker {
 }
 ```
 
-### Dynamic stubs
+#### Dynamic stubs
 
 We can also configure our stubs programmatically like we did in [testing with @WireMockTest](#app-test-with-wiremocktest) or [testing with WireMockExtension](#app-test-with-wiremockextension).
 
@@ -397,9 +400,50 @@ fun `call foo an bar with dynamic stubs`() {
 }
 ```
 
-## App run with WireMock Docker
+### App test with WireMock Testcontainers module
 
-**WireMock** with **Docker** has a cool advantage, we can use the same **docker-compose** used by the test to start the application and run/debug it locally:
+Instead of the generic **ComposeContainer** we can use the specific **WireMockContainer** this way:
+
+```kotlin
+@Testcontainers
+@TestInstance(PER_CLASS)
+class AppShouldWithWireMockTestcontainers {
+
+  companion object {
+    @Container
+    @JvmStatic
+    val containerFoo = WireMockContainer("wiremock/wiremock:3.2.0")
+      .withMappingFromJSON(File("wiremock/foo-api/mappings/foo-get.json").readText())
+      .withCliArg("--global-response-templating")
+
+    @Container
+    @JvmStatic
+    val containerBar = WireMockContainer("wiremock/wiremock:3.2.0")
+      .withMappingFromJSON(File("wiremock/bar-api/mappings/bar-get.json").readText())
+      .withCliArg("--global-response-templating")
+  }
+
+  @Test
+  fun `call foo and bar`() {
+    val fooApiUrl = "http://${containerFoo.host}:${containerFoo.port}"
+    val barApiUrl = "http://${containerBar.host}:${containerBar.port}"
+    // ...
+  }
+
+  @Test
+  fun `call foo an bar with dynamic stubs`() {
+    // ...
+  }
+}
+```
+
+Tests are the same as the ones in [App test with Compose Testcontainers module](#app-test-with-compose-testcontainers-module), just with two minor differences:
+- The way we get `host` and `port` for each container
+- The way we specify `--global-response-templating` parameter to enable [response templating](https://wiremock.org/docs/response-templating/) 
+
+### App run with WireMock container and Docker Compose
+
+We can use the same **docker-compose** used by the test to start the application and run/debug it locally:
 
 ![WireMockDockerRun](doc/WireMockDockerRun.png)
 
