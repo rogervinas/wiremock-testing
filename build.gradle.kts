@@ -19,7 +19,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("io.mockk:mockk:1.12.2")
   testImplementation("org.assertj:assertj-core:3.24.2")
-  testImplementation("com.github.tomakehurst:wiremock-jre8:3.0.1")
+  testImplementation("org.wiremock:wiremock:3.3.1")
   testImplementation("org.testcontainers:testcontainers:1.19.1")
   testImplementation("org.testcontainers:junit-jupiter:1.19.1")
 }
