@@ -1,4 +1,7 @@
 [![CI](https://github.com/rogervinas/wiremock-testing/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/rogervinas/wiremock-testing/actions/workflows/gradle.yml)
+![Java](https://img.shields.io/badge/Java-21-blue?labelColor=black)
+![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20-blue?labelColor=black)
+![WireMock](https://img.shields.io/badge/WireMock-3.3.1-blue?labelColor=black)
 
 # WireMock Testing
 
@@ -45,7 +48,6 @@ And later the one with [WireMock's official Docker image](https://hub.docker.com
 
 ```kotlin
 interface BarClient {
-
   fun call(name: String): String
 }
 ```
@@ -112,7 +114,6 @@ class BarKtorClient(private val url: String) : BarClient {
 
 ```kotlin
 interface FooClient {
-  
   fun call(name: String): String
 }
 ```
@@ -129,9 +130,7 @@ class FooKtorClientShould {
 
  @RegisterExtension
  val wm: WireMockExtension = WireMockExtension.newInstance()
-  .options(wireMockConfig()
-    .extensions(ResponseTemplateTransformer(true))
-  )
+  .options(options().globalTemplating(true))
   .configureStaticDsl(true)
   .build()
 

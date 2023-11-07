@@ -6,8 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.matching
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.stubFor
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
-import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -22,7 +21,7 @@ class FooKtorClientShould {
 
   @RegisterExtension
   val wm: WireMockExtension = WireMockExtension.newInstance()
-    .options(wireMockConfig().extensions(ResponseTemplateTransformer(true)))
+    .options(options().globalTemplating(true))
     .configureStaticDsl(true)
     .build()
 
