@@ -327,13 +327,11 @@ class AppShouldWithWireMockDocker {
    
   @Container
   @JvmStatic
-  val container = DockerComposeContainer<Nothing>(File("docker-compose.yml"))
-   .apply {
-    withLocalCompose(true)
-    withExposedService(fooServiceName, fooServicePort, forListeningPort())
-    withExposedService(barServiceName, barServicePort, forListeningPort())
-    withLogConsumer()
-   }
+  val container = ComposeContainer(File("docker-compose.yml"))
+    .withLocalCompose(true)
+    .withExposedService(fooServiceName, fooServicePort, forListeningPort())
+    .withExposedService(barServiceName, barServicePort, forListeningPort())
+    .withLogConsumer()
    
   @BeforeAll
   @JvmStatic
