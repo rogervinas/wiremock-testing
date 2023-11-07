@@ -96,7 +96,9 @@ In order to make the test pass 🟩 we can implement the **BarKtorClient** this 
 ```kotlin
 class BarKtorClient(private val url: String) : BarClient {
 
- private val client = HttpClient(CIO)
+ private val client = HttpClient(CIO) {
+   expectSuccess = true
+ }
 
  override fun call(name: String): String = runBlocking {
   try {
@@ -171,7 +173,9 @@ Same as before in order to make the test pass 🟩 we can implement the **FooKto
 ```kotlin
 class FooKtorClient(private val url: String) : FooClient {
   
- private val client = HttpClient(CIO)
+ private val client = HttpClient(CIO) {
+   expectSuccess = true
+ }
 
  override fun call(name: String): String = runBlocking {
   try {
