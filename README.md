@@ -40,7 +40,7 @@ And later the one with [@Testcontainers](https://testcontainers.com/) and these 
   * [App implementation](#app-implementation)
   * [App test with @WireMockTest](#app-test-with-wiremocktest)
   * [App test with WireMockExtension](#app-test-with-wiremockextension)
-  * [App test with Compose Testcontainers module and WireMock container](#app-test-with-compose-testcontainers-module-and-wiremock-container)
+  * [App test with Compose Testcontainers module](#app-test-with-compose-testcontainers-module)
     * [Static stubs](#static-stubs)
     * [Dynamic stubs](#dynamic-stubs)
   * [App test with WireMock Testcontainers module](#app-test-with-wiremock-testcontainers-module)
@@ -296,7 +296,7 @@ class AppShouldWithTwoWireMockExtensions {
 }
 ```
 
-## App test with Compose Testcontainers module and WireMock container
+## App test with Compose Testcontainers module
 
 ### Static stubs
 
