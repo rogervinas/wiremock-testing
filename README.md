@@ -13,7 +13,7 @@ And **WireMock** also has:
 - A [Docker image](https://hub.docker.com/r/wiremock/wiremock)!
 - A [Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)!
 
-You can also check [other supported technologies](https://wiremock.org/docs/#:~:text=By%20technology)
+(you can also check [other supported technologies](https://wiremock.org/docs/#:~:text=By%20technology))
 
 But "talk is cheap, show me the code [...](https://www.goodreads.com/quotes/437173-talk-is-cheap-show-me-the-code#:~:text=Quote%20by%20Linus%20Torvalds%3A%20%E2%80%9CTalk,Show%20me%20the%20code.%E2%80%9D)" 😮
 
