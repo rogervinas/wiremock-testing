@@ -47,7 +47,6 @@ And later the one with [WireMock's official Docker image](https://hub.docker.com
 
 ```kotlin
 interface BarClient {
-
   fun call(name: String): String
 }
 ```
@@ -114,7 +113,6 @@ class BarKtorClient(private val url: String) : BarClient {
 
 ```kotlin
 interface FooClient {
-  
   fun call(name: String): String
 }
 ```
