@@ -129,9 +129,7 @@ class FooKtorClientShould {
 
  @RegisterExtension
  val wm: WireMockExtension = WireMockExtension.newInstance()
-  .options(wireMockConfig()
-    .extensions(ResponseTemplateTransformer(true))
-  )
+  .options(options().globalTemplating(true))
   .configureStaticDsl(true)
   .build()
 
