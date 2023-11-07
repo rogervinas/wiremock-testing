@@ -398,9 +398,48 @@ fun `call foo an bar with dynamic stubs`() {
 
 ## App test with WireMock Testcontainers module
 
+Instead of the generic **ComposeContainer** we can use the specific **WireMockContainer** this way:
+
+```kotlin
+@Testcontainers
+@TestInstance(PER_CLASS)
+class AppShouldWithWireMockTestcontainers {
+
+  companion object {
+    @Container
+    @JvmStatic
+    val containerFoo = WireMockContainer("wiremock/wiremock:3.2.0")
+      .withMappingFromJSON(File("wiremock/foo-api/mappings/foo-get.json").readText())
+      .withCliArg("--global-response-templating")
+
+    @Container
+    @JvmStatic
+    val containerBar = WireMockContainer("wiremock/wiremock:3.2.0")
+      .withMappingFromJSON(File("wiremock/bar-api/mappings/bar-get.json").readText())
+      .withCliArg("--global-response-templating")
+  }
+
+  @Test
+  fun `call foo and bar`() {
+    val fooApiUrl = "http://${containerFoo.host}:${containerFoo.port}"
+    val barApiUrl = "http://${containerBar.host}:${containerBar.port}"
+    // ...
+  }
+
+  @Test
+  fun `call foo an bar with dynamic stubs`() {
+    // ...
+  }
+}
+```
+
+Tests are the same as the ones in [App test with Compose Testcontainers module](#app-test-with-compose-testcontainers-module), just with two minor differences:
+- The way we get `host` and `port` for each container
+- The way we specify `--global-response-templating` parameter to enable [response templating](https://wiremock.org/docs/response-templating/) 
+
 ## App run with WireMock container and Docker Compose
 
-**WireMock** container has a cool advantage, we can use the same **docker compose** used by the test to start the application and run/debug it locally:
+We can use the same **docker-compose** used by the test to start the application and run/debug it locally:
 
 ![WireMockDockerRun](doc/WireMockDockerRun.png)
 
