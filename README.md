@@ -22,7 +22,7 @@ Ok so let's implement first the scenario with **@WireMockTest**:
 ![WireMockTest](doc/WireMockTest.png)
 
 And later the one with [@Testcontainers](https://testcontainers.com/) and these two alternatives:
-1. Generic [Docker Compose Testcontainers module](https://java.testcontainers.org/modules/docker_compose/#compose-v2) using [official WireMock's docker image](https://hub.docker.com/r/wiremock/wiremock)
+1. Generic [Compose Testcontainers module](https://java.testcontainers.org/modules/docker_compose/#compose-v2) using [official WireMock's docker image](https://hub.docker.com/r/wiremock/wiremock)
 2. [WireMock's Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)
 
 ![WireMockDockerTest](doc/WireMockDockerTest.png)
@@ -40,9 +40,10 @@ And later the one with [@Testcontainers](https://testcontainers.com/) and these 
   * [App implementation](#app-implementation)
   * [App test with @WireMockTest](#app-test-with-wiremocktest)
   * [App test with WireMockExtension](#app-test-with-wiremockextension)
-  * [App test with WireMock Docker](#app-test-with-wiremock-docker)
+  * [App test with Compose Testcontainers module and WireMock container](#app-test-with-compose-testcontainers-module-and-wiremock-container)
     * [Static stubs](#static-stubs)
     * [Dynamic stubs](#dynamic-stubs)
+  * [App test with WireMock Testcontainers module](#app-test-with-wiremock-testcontainers-module)
   * [App run with WireMock container and Docker Compose](#app-run-with-wiremock-container-and-docker-compose)
 * [Test this demo](#test-this-demo)
 * [Run this demo](#run-this-demo)
@@ -295,7 +296,7 @@ class AppShouldWithTwoWireMockExtensions {
 }
 ```
 
-## App test with WireMock Docker
+## App test with Compose Testcontainers module and WireMock container
 
 ### Static stubs
 
@@ -395,6 +396,8 @@ fun `call foo an bar with dynamic stubs`() {
  )
 }
 ```
+
+## App test with WireMock Testcontainers module
 
 ## App run with WireMock container and Docker Compose
 
