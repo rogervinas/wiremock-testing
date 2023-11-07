@@ -6,54 +6,38 @@ import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
-import org.testcontainers.containers.ComposeContainer
-import org.testcontainers.containers.wait.strategy.Wait.forListeningPort
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import org.wiremock.integrations.testcontainers.WireMockContainer
 import java.io.File
 
 @Testcontainers
 @TestInstance(PER_CLASS)
-class AppShouldWithComposeTestcontainers {
+class AppShouldWithWireMockTestcontainers {
 
   companion object {
     private const val name = "Ivy"
 
-    private const val fooServiceName = "foo-api"
-    private const val fooServicePort = 8080
-    private const val barServiceName = "bar-api"
-    private const val barServicePort = 8080
-
-    private lateinit var fooApiHost: String
-    private var fooApiPort: Int = 0
-    private lateinit var barApiHost: String
-    private var barApiPort: Int = 0
+    @Container
+    @JvmStatic
+    val containerFoo = WireMockContainer("wiremock/wiremock:3.2.0")
+      .withMappingFromJSON(File("wiremock/foo-api/mappings/foo-get.json").readText())
+      .withCliArg("--global-response-templating")
 
     @Container
     @JvmStatic
-    val container = ComposeContainer(File("docker-compose.yml"))
-      .withLocalCompose(true)
-      .withExposedService(fooServiceName, fooServicePort, forListeningPort())
-      .withExposedService(barServiceName, barServicePort, forListeningPort())
-
-    @BeforeAll
-    @JvmStatic
-    fun beforeAll() {
-      fooApiHost = container.getServiceHost(fooServiceName, fooServicePort)
-      fooApiPort = container.getServicePort(fooServiceName, fooServicePort)
-      barApiHost = container.getServiceHost(barServiceName, barServicePort)
-      barApiPort = container.getServicePort(barServiceName, barServicePort)
-    }
+    val containerBar = WireMockContainer("wiremock/wiremock:3.2.0")
+      .withMappingFromJSON(File("wiremock/bar-api/mappings/bar-get.json").readText())
+      .withCliArg("--global-response-templating")
   }
 
   @Test
   fun `call foo and bar`() {
-    val fooApiUrl = "http://${fooApiHost}:${fooApiPort}"
-    val barApiUrl = "http://${barApiHost}:${barApiPort}"
+    val fooApiUrl = "http://${containerFoo.host}:${containerFoo.port}"
+    val barApiUrl = "http://${containerBar.host}:${containerBar.port}"
 
     val app = App(name, fooApiUrl, barApiUrl)
 
@@ -69,15 +53,15 @@ class AppShouldWithComposeTestcontainers {
 
   @Test
   fun `call foo an bar with dynamic stubs`() {
-    val fooApiUrl = "http://${fooApiHost}:${fooApiPort}/dynamic"
-    val barApiUrl = "http://${barApiHost}:${barApiPort}/dynamic"
+    val fooApiUrl = "http://${containerFoo.host}:${containerFoo.port}/dynamic"
+    val barApiUrl = "http://${containerBar.host}:${containerBar.port}/dynamic"
 
-    WireMock(fooApiHost, fooApiPort)
+    WireMock(containerFoo.host, containerFoo.port)
           .register(get(urlPathEqualTo("/dynamic/foo"))
                 .withQueryParam("name", WireMock.equalTo(name))
                 .willReturn(ok().withBody("Hi $name I am Foo, how are you?"))
     )
-    WireMock(barApiHost, barApiPort)
+    WireMock(containerBar.host, containerBar.port)
           .register(get(urlPathMatching("/dynamic/bar/$name"))
                 .willReturn(ok().withBody("Hi $name I am Bar, nice to meet you!"))
           )

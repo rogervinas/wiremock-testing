@@ -20,6 +20,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.12.2")
   testImplementation("org.assertj:assertj-core:3.24.2")
   testImplementation("org.wiremock:wiremock:3.3.1")
+  testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-13")
   testImplementation("org.testcontainers:testcontainers:1.19.1")
   testImplementation("org.testcontainers:junit-jupiter:1.19.1")
 }

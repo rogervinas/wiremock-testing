@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   foo-api:
-    image: wiremock/wiremock:2.32.0
+    image: wiremock/wiremock:3.2.0
     ports:
       - "8080"
     command:
@@ -12,7 +12,7 @@ services:
       - ./wiremock/foo-api:/home/wiremock
 
   bar-api:
-    image: wiremock/wiremock:2.32.0
+    image: wiremock/wiremock:3.2.0
     ports:
       - "8080"
     command:
