@@ -313,7 +313,7 @@ Finally we test the **App** using [Testcontainers JUnit5 extension](https://www.
 ```kotlin
 @Testcontainers
 @TestInstance(PER_CLASS)
-class AppShouldWithWireMockDocker {
+class AppShouldWithComposeTestcontainers {
 
  companion object {
   private const val name = "Ivy" 
@@ -332,7 +332,6 @@ class AppShouldWithWireMockDocker {
     .withLocalCompose(true)
     .withExposedService(fooServiceName, fooServicePort, forListeningPort())
     .withExposedService(barServiceName, barServicePort, forListeningPort())
-    .withLogConsumer()
    
   @BeforeAll
   @JvmStatic

@@ -15,7 +15,7 @@ import java.io.File
 
 @Testcontainers
 @TestInstance(PER_CLASS)
-class AppShouldWithWireMockDocker {
+class AppShouldWithComposeTestcontainers {
 
   companion object {
     private const val name = "Ivy"
