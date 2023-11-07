@@ -1,5 +1,6 @@
 [![CI](https://github.com/rogervinas/wiremock-testing/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/rogervinas/wiremock-testing/actions/workflows/gradle.yml)
-![JAVA](https://img.shields.io/badge/JAVA-17-blue?labelColor=black)
+![Java](https://img.shields.io/badge/Java-17-blue?labelColor=black)
+![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20-blue?labelColor=black)
 
 # WireMock Testing
 
