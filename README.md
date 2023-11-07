@@ -296,9 +296,9 @@ class AppShouldWithTwoWireMockExtensions {
 }
 ```
 
-## App test with Compose Testcontainers module
+### App test with Compose Testcontainers module
 
-### Static stubs
+#### Static stubs
 
 First we will use static stubs configured as json files:
 
@@ -362,7 +362,7 @@ class AppShouldWithComposeTestcontainers {
 }
 ```
 
-### Dynamic stubs
+#### Dynamic stubs
 
 We can also configure our stubs programmatically like we did in [testing with @WireMockTest](#app-test-with-wiremocktest) or [testing with WireMockExtension](#app-test-with-wiremockextension).
 
@@ -396,7 +396,7 @@ fun `call foo an bar with dynamic stubs`() {
 }
 ```
 
-## App test with WireMock Testcontainers module
+### App test with WireMock Testcontainers module
 
 Instead of the generic **ComposeContainer** we can use the specific **WireMockContainer** this way:
 
@@ -437,7 +437,7 @@ Tests are the same as the ones in [App test with Compose Testcontainers module](
 - The way we get `host` and `port` for each container
 - The way we specify `--global-response-templating` parameter to enable [response templating](https://wiremock.org/docs/response-templating/) 
 
-## App run with WireMock container and Docker Compose
+### App run with WireMock container and Docker Compose
 
 We can use the same **docker-compose** used by the test to start the application and run/debug it locally:
 
