@@ -43,7 +43,7 @@ And later the one with [@Testcontainers](https://testcontainers.com/) and these 
   * [App test with WireMock Docker](#app-test-with-wiremock-docker)
     * [Static stubs](#static-stubs)
     * [Dynamic stubs](#dynamic-stubs)
-  * [App run with WireMock Docker](#app-run-with-wiremock-docker)
+  * [App run with WireMock and Docker Compose](#app-run-with-wiremock-docker-and-docker-compose)
 * [Test this demo](#test-this-demo)
 * [Run this demo](#run-this-demo)
 
@@ -398,9 +398,9 @@ fun `call foo an bar with dynamic stubs`() {
 }
 ```
 
-## App run with WireMock Docker
+## App run with WireMock and Docker Compose
 
-**WireMock** with **Docker** has a cool advantage, we can use the same **docker-compose** used by the test to start the application and run/debug it locally:
+**WireMock** with **Docker** has a cool advantage, we can use the same **docker compose** used by the test to start the application and run/debug it locally:
 
 ![WireMockDockerRun](doc/WireMockDockerRun.png)
 
