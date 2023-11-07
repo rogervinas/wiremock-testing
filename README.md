@@ -22,8 +22,8 @@ Ok so let's implement first the scenario with **@WireMockTest**:
 ![WireMockTest](doc/WireMockTest.png)
 
 And later the one with [@Testcontainers](https://testcontainers.com/) and these two alternatives:
-- Generic [Docker Compose Testcontainers module](https://java.testcontainers.org/modules/docker_compose/#compose-v2) using [official WireMock's docker image](https://hub.docker.com/r/wiremock/wiremock)
-- [WireMock's Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)
+1. Generic [Docker Compose Testcontainers module](https://java.testcontainers.org/modules/docker_compose/#compose-v2) using [official WireMock's docker image](https://hub.docker.com/r/wiremock/wiremock)
+2. [WireMock's Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)
 
 ![WireMockDockerTest](doc/WireMockDockerTest.png)
 
