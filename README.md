@@ -6,11 +6,14 @@
 # WireMock Testing
 
 [WireMock](https://wiremock.org/) is a great library to mock APIs in your tests and supports [Junit5](https://wiremock.org/docs/junit-jupiter/) with two modes:
-
 - Declarative with **@WireMockTest**
 - Programmatic with **WireMockExtension**
 
-And **WireMock** also has an [official Docker image](https://hub.docker.com/r/wiremock/wiremock)!
+And **WireMock** also has:
+- A [Docker image](https://hub.docker.com/r/wiremock/wiremock)!
+- A [Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)!
+
+You can also check [other supported technologies](https://wiremock.org/docs/#:~:text=By%20technology)
 
 But "talk is cheap, show me the code [...](https://www.goodreads.com/quotes/437173-talk-is-cheap-show-me-the-code#:~:text=Quote%20by%20Linus%20Torvalds%3A%20%E2%80%9CTalk,Show%20me%20the%20code.%E2%80%9D)" 😮
 
@@ -18,7 +21,9 @@ Ok so let's implement first the scenario with **@WireMockTest**:
 
 ![WireMockTest](doc/WireMockTest.png)
 
-And later the one with [WireMock's official Docker image](https://hub.docker.com/r/wiremock/wiremock):
+And later the one with [@Testcontainers](https://testcontainers.com/) and these two alternatives:
+- Generic [Docker Compose Testcontainers module](https://java.testcontainers.org/modules/docker_compose/#compose-v2) using [official WireMock's docker image](https://hub.docker.com/r/wiremock/wiremock)
+- [WireMock's Testcontainers module](https://wiremock.org/docs/solutions/testcontainers/)
 
 ![WireMockDockerTest](doc/WireMockDockerTest.png)
 
@@ -397,7 +402,7 @@ fun `call foo an bar with dynamic stubs`() {
 
 **WireMock** with **Docker** has a cool advantage, we can use the same **docker-compose** used by the test to start the application and run/debug it locally:
 
-![WireMockDockerRun](doc/WireMockDockerRun.png)
+![WireMockDockerComposeRun](doc/WireMockDockerComposeRun.png)
 
 In this case we only need to use fixed ports, configuring them in [docker-compose.override.yml](docker-compose.override.yml). This override does not affect **@Testcontainers**.
 
