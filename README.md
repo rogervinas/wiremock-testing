@@ -43,7 +43,7 @@ And later the one with [@Testcontainers](https://testcontainers.com/) and these 
   * [App test with WireMock Docker](#app-test-with-wiremock-docker)
     * [Static stubs](#static-stubs)
     * [Dynamic stubs](#dynamic-stubs)
-  * [App run with WireMock and Docker Compose](#app-run-with-wiremock-docker-and-docker-compose)
+  * [App run with WireMock and Docker Compose](#app-run-with-wiremock-and-docker-compose)
 * [Test this demo](#test-this-demo)
 * [Run this demo](#run-this-demo)
 
