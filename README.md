@@ -108,7 +108,7 @@ class BarKtorClient(private val url: String) : BarClient {
 
  override fun call(name: String): String = runBlocking {
   try {
-   client.get("$url/bar/$name")
+   client.get("$url/bar/$name").body<String>()
   } catch (e: Exception) {
    "Bar api error: ${e.message}"
   }
@@ -187,7 +187,7 @@ class FooKtorClient(private val url: String) : FooClient {
   try {
    client.get("$url/foo") {
     parameter("name", name)
-   }
+   }.body<String>()
   } catch (e: Exception) {
    "Foo api error: ${e.message}"
   }
