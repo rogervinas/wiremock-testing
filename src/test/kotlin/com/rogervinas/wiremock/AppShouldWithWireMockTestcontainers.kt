@@ -1,6 +1,7 @@
 package com.rogervinas.wiremock
 
 import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
@@ -59,7 +60,7 @@ class AppShouldWithWireMockTestcontainers {
     WireMock(containerFoo.host, containerFoo.port)
       .register(
         get(urlPathEqualTo("/dynamic/foo"))
-          .withQueryParam("name", WireMock.equalTo(name))
+          .withQueryParam("name", equalTo(name))
           .willReturn(ok().withBody("Hi $name I am Foo, how are you?"))
       )
     WireMock(containerBar.host, containerBar.port)
