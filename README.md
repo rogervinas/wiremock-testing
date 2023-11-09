@@ -380,12 +380,12 @@ fun `call foo an bar with dynamic stubs`() {
   
  WireMock(fooApiHost, fooApiPort)
   .register(get(urlPathEqualTo("/dynamic/foo"))
-   .withQueryParam("name", WireMock.equalTo(name))
-   .willReturn(ok().withBody("Hi $name I am Foo, how are you?"))
+  .withQueryParam("name", WireMock.equalTo(name))
+  .willReturn(ok().withBody("Hi $name I am Foo, how are you?"))
  )
  WireMock(barApiHost, barApiPort)
   .register(get(urlPathMatching("/dynamic/bar/$name"))
-   .willReturn(ok().withBody("Hi $name I am Bar, nice to meet you!"))
+  .willReturn(ok().withBody("Hi $name I am Bar, nice to meet you!"))
  )
  
  val app = App(name, fooApiUrl, barApiUrl)
