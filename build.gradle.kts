@@ -21,7 +21,7 @@ dependencies {
   testImplementation("org.assertj:assertj-core:3.25.3")
   testImplementation("org.wiremock:wiremock:3.4.0")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-13")
-  testImplementation(platform("org.testcontainers:testcontainers-bom:1.19.5"))
+  testImplementation(platform("org.testcontainers:testcontainers-bom:1.19.6"))
   testImplementation("org.testcontainers:testcontainers")
   testImplementation("org.testcontainers:junit-jupiter")
 }
