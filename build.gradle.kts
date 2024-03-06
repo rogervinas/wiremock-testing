@@ -17,7 +17,7 @@ dependencies {
   implementation("io.ktor:ktor-client-cio:2.3.9")
 
   testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-  testImplementation("io.mockk:mockk:1.13.9")
+  testImplementation("io.mockk:mockk:1.13.10")
   testImplementation("org.assertj:assertj-core:3.25.3")
   testImplementation("org.wiremock:wiremock:3.4.2")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-13")
