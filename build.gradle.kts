@@ -14,7 +14,7 @@ dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
   implementation("io.ktor:ktor-client-core:2.3.8")
-  implementation("io.ktor:ktor-client-cio:2.3.8")
+  implementation("io.ktor:ktor-client-cio:2.3.9")
 
   testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
   testImplementation("io.mockk:mockk:1.13.9")
