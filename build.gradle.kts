@@ -10,7 +10,7 @@ repositories {
   mavenCentral()
 }
 
-val ktorClientVersion = "2.3.10"
+val ktorClientVersion = "2.3.11"
 
 dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
