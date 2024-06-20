@@ -320,11 +320,11 @@ Finally we test the **App** using [Testcontainers JUnit5 extension](https://www.
 class AppShouldWithComposeTestcontainers {
 
  companion object {
-  private const val name = "Ivy" 
-  private const val fooServiceName = "foo-api"
-  private const val fooServicePort = 8080
-  private const val barServiceName = "bar-api"
-  private const val barServicePort = 8080
+  private const val NAME = "Ivy" 
+  private const val FOO_SERVICE_NAME = "foo-api"
+  private const val FOO_SERVICE_PORT = 8080
+  private const val BAR_SERVICE_NAME = "bar-api"
+  private const val BAR_SERVICE_PORT = 8080
   private lateinit var fooApiHost: String
   private var fooApiPort: Int = 0
   private lateinit var barApiHost: String
@@ -334,16 +334,16 @@ class AppShouldWithComposeTestcontainers {
   @JvmStatic
   val container = ComposeContainer(File("docker-compose.yml"))
     .withLocalCompose(true)
-    .withExposedService(fooServiceName, fooServicePort, forListeningPort())
-    .withExposedService(barServiceName, barServicePort, forListeningPort())
+    .withExposedService(FOO_SERVICE_NAME, FOO_SERVICE_PORT, forListeningPort())
+    .withExposedService(BAR_SERVICE_NAME, BAR_SERVICE_PORT, forListeningPort())
    
   @BeforeAll
   @JvmStatic
   fun beforeAll() {
-    fooApiHost = container.getServiceHost(fooServiceName, fooServicePort)
-    fooApiPort = container.getServicePort(fooServiceName, fooServicePort)
-    barApiHost = container.getServiceHost(barServiceName, barServicePort)
-    barApiPort = container.getServicePort(barServiceName, barServicePort)
+    fooApiHost = container.getServiceHost(FOO_SERVICE_NAME, FOO_SERVICE_PORT)
+    fooApiPort = container.getServicePort(FOO_SERVICE_NAME, FOO_SERVICE_PORT)
+    barApiHost = container.getServiceHost(BAR_SERVICE_NAME, BAR_SERVICE_PORT)
+    barApiPort = container.getServicePort(BAR_SERVICE_NAME, BAR_SERVICE_PORT)
   }
  }
 

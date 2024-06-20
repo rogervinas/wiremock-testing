@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test
 
 @WireMockTest
 class AppShouldWithOneWireMockTest {
-
   private val name = "Ada"
 
   @Test
@@ -21,22 +20,22 @@ class AppShouldWithOneWireMockTest {
     stubFor(
       get(urlPathEqualTo("/foo"))
         .withQueryParam("name", equalTo(name))
-        .willReturn(ok().withBody("Hello $name I am Foo!"))
+        .willReturn(ok().withBody("Hello $name I am Foo!")),
     )
     stubFor(
       get(urlPathMatching("/bar/$name"))
-        .willReturn(ok().withBody("Hello $name I am Bar!"))
+        .willReturn(ok().withBody("Hello $name I am Bar!")),
     )
 
     val app = App(name, wm.httpBaseUrl, wm.httpBaseUrl)
 
     assertThat(app.execute()).isEqualTo(
       """
-        Hi! I am $name
-        I called Foo and its response is Hello $name I am Foo!
-        I called Bar and its response is Hello $name I am Bar!
-        Bye!
-      """.trimIndent()
+      Hi! I am $name
+      I called Foo and its response is Hello $name I am Foo!
+      I called Bar and its response is Hello $name I am Bar!
+      Bye!
+      """.trimIndent(),
     )
   }
 }

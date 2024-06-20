@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 class AppUseCaseShould {
-
   private val name = "Tim"
   private val fooResponse = "Hi I am Foo"
   private val fooError = "Sorry Foo failed"
@@ -28,11 +27,11 @@ class AppUseCaseShould {
     every { barClient.call(name) } returns barResponse
     assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $name
-        I called Foo and its response is $fooResponse
-        I called Bar and its response is $barResponse
-        Bye!
-      """.trimIndent()
+      Hi! I am $name
+      I called Foo and its response is $fooResponse
+      I called Bar and its response is $barResponse
+      Bye!
+      """.trimIndent(),
     )
   }
 
@@ -42,11 +41,11 @@ class AppUseCaseShould {
     every { barClient.call(name) } returns barResponse
     assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $name
-        I called Foo and it failed with $fooError
-        I called Bar and its response is $barResponse
-        Bye!
-      """.trimIndent()
+      Hi! I am $name
+      I called Foo and it failed with $fooError
+      I called Bar and its response is $barResponse
+      Bye!
+      """.trimIndent(),
     )
   }
 
@@ -56,11 +55,11 @@ class AppUseCaseShould {
     every { barClient.call(name) } throws Exception(barError)
     assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $name
-        I called Foo and its response is $fooResponse
-        I called Bar and it failed with $barError
-        Bye!
-      """.trimIndent()
+      Hi! I am $name
+      I called Foo and its response is $fooResponse
+      I called Bar and it failed with $barError
+      Bye!
+      """.trimIndent(),
     )
   }
 
@@ -70,11 +69,11 @@ class AppUseCaseShould {
     every { barClient.call(name) } throws Exception(barError)
     assertThat(AppUseCase().execute(name, fooClient, barClient)).isEqualTo(
       """
-        Hi! I am $name
-        I called Foo and it failed with $fooError
-        I called Bar and it failed with $barError
-        Bye!
-      """.trimIndent()
+      Hi! I am $name
+      I called Foo and it failed with $fooError
+      I called Bar and it failed with $barError
+      Bye!
+      """.trimIndent(),
     )
   }
 }

@@ -3,9 +3,8 @@ package com.rogervinas.wiremock
 class App(
   private val name: String,
   private val fooApiUrl: String,
-  private val barApiUrl: String
+  private val barApiUrl: String,
 ) {
-
   fun execute() = AppUseCase().execute(name, FooKtorClient(fooApiUrl), BarKtorClient(barApiUrl))
 }
 
