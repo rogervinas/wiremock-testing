@@ -12,14 +12,13 @@ import org.junit.jupiter.api.Test
 
 @WireMockTest
 class BarKtorClientShould {
-
   private val name = "Sue"
 
   @Test
   fun `call bar api`(wm: WireMockRuntimeInfo) {
     stubFor(
       get(urlPathMatching("/bar/$name"))
-        .willReturn(ok().withBody("Hello $name I am Bar!"))
+        .willReturn(ok().withBody("Hello $name I am Bar!")),
     )
 
     assertThat(BarKtorClient(wm.httpBaseUrl).call(name))
@@ -30,7 +29,7 @@ class BarKtorClientShould {
   fun `handle bar api server error`(wireMockRuntimeInfo: WireMockRuntimeInfo) {
     stubFor(
       get(urlPathMatching("/bar/.+"))
-        .willReturn(serverError())
+        .willReturn(serverError()),
     )
 
     assertThat(BarKtorClient(wireMockRuntimeInfo.httpBaseUrl).call(name))

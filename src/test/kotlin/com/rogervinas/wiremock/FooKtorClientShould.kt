@@ -16,21 +16,21 @@ import org.junit.jupiter.api.extension.RegisterExtension
 
 @TestInstance(PER_CLASS)
 class FooKtorClientShould {
-
   private val name = "Joe"
 
   @RegisterExtension
-  val wm: WireMockExtension = WireMockExtension.newInstance()
-    .options(options().globalTemplating(true))
-    .configureStaticDsl(true)
-    .build()
+  val wm: WireMockExtension =
+    WireMockExtension.newInstance()
+      .options(options().globalTemplating(true))
+      .configureStaticDsl(true)
+      .build()
 
   @Test
   fun `call foo api`() {
     stubFor(
       get(urlPathEqualTo("/foo"))
         .withQueryParam("name", matching(".+"))
-        .willReturn(ok().withBody("Hello {{request.query.name}} I am Foo!"))
+        .willReturn(ok().withBody("Hello {{request.query.name}} I am Foo!")),
     )
 
     assertThat(FooKtorClient(wm.baseUrl()).call(name))
@@ -41,7 +41,7 @@ class FooKtorClientShould {
   fun `handle foo api server error`() {
     stubFor(
       get(urlPathEqualTo("/foo"))
-        .willReturn(WireMock.serverError())
+        .willReturn(WireMock.serverError()),
     )
 
     assertThat(FooKtorClient(wm.baseUrl()).call(name))

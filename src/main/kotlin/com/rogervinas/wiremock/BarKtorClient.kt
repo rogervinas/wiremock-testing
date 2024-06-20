@@ -7,16 +7,17 @@ import io.ktor.client.request.get
 import kotlinx.coroutines.runBlocking
 
 class BarKtorClient(private val url: String) : BarClient {
-
-  private val client = HttpClient(CIO) {
-    expectSuccess = true
-  }
-
-  override fun call(name: String): String = runBlocking {
-    try {
-      client.get("$url/bar/$name").body<String>()
-    } catch (e: Exception) {
-      "Bar api error: ${e.message}"
+  private val client =
+    HttpClient(CIO) {
+      expectSuccess = true
     }
-  }
+
+  override fun call(name: String): String =
+    runBlocking {
+      try {
+        client.get("$url/bar/$name").body<String>()
+      } catch (e: Exception) {
+        "Bar api error: ${e.message}"
+      }
+    }
 }

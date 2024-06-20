@@ -1,8 +1,11 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 plugins {
   kotlin("jvm") version "2.0.0"
+  id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
   application
 }
 
@@ -28,9 +31,15 @@ dependencies {
   testImplementation("org.testcontainers:junit-jupiter")
 }
 
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
 kotlin {
-  jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of(21))
+  compilerOptions {
+    freeCompilerArgs.addAll("-Xjsr305=strict")
   }
 }
 
