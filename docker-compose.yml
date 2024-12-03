@@ -1,7 +1,7 @@
 services:
 
   foo-api:
-    image: wiremock/wiremock:3.9.2
+    image: wiremock/wiremock:3.10.0
     ports:
       - "8080"
     command:
