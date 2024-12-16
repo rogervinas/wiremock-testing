@@ -13,7 +13,7 @@ repositories {
   mavenCentral()
 }
 
-val ktorClientVersion = "3.0.1"
+val ktorClientVersion = "3.0.2"
 
 dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -21,7 +21,7 @@ dependencies {
   implementation("io.ktor:ktor-client-core:$ktorClientVersion")
   implementation("io.ktor:ktor-client-cio:$ktorClientVersion")
 
-  testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
   testImplementation("io.mockk:mockk:1.13.13")
   testImplementation("org.assertj:assertj-core:3.26.3")
   testImplementation("org.wiremock:wiremock:3.10.0")
