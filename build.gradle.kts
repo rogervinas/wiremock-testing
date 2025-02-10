@@ -24,7 +24,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
   testImplementation("io.mockk:mockk:1.13.16")
   testImplementation("org.assertj:assertj-core:3.27.3")
-  testImplementation("org.wiremock:wiremock:3.10.0")
+  testImplementation("org.wiremock:wiremock:3.11.0")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-14")
   testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.4"))
   testImplementation("org.testcontainers:testcontainers")
