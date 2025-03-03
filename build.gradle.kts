@@ -5,7 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 plugins {
   kotlin("jvm") version "2.1.10"
-  id("org.jlleitschuh.gradle.ktlint") version "12.1.2"
+  id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
   application
 }
 
@@ -13,7 +13,7 @@ repositories {
   mavenCentral()
 }
 
-val ktorClientVersion = "3.1.0"
+val ktorClientVersion = "3.1.1"
 
 dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -21,12 +21,12 @@ dependencies {
   implementation("io.ktor:ktor-client-core:$ktorClientVersion")
   implementation("io.ktor:ktor-client-cio:$ktorClientVersion")
 
-  testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
-  testImplementation("io.mockk:mockk:1.13.16")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
+  testImplementation("io.mockk:mockk:1.13.17")
   testImplementation("org.assertj:assertj-core:3.27.3")
-  testImplementation("org.wiremock:wiremock:3.12.0")
+  testImplementation("org.wiremock:wiremock:3.12.1")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-14")
-  testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.4"))
+  testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.5"))
   testImplementation("org.testcontainers:testcontainers")
   testImplementation("org.testcontainers:junit-jupiter")
 }
