@@ -21,11 +21,15 @@ dependencies {
   implementation("io.ktor:ktor-client-core:$ktorClientVersion")
   implementation("io.ktor:ktor-client-cio:$ktorClientVersion")
 
-  testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
+  testImplementation(platform("org.junit:junit-bom:5.12.0"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
   testImplementation("io.mockk:mockk:1.13.17")
   testImplementation("org.assertj:assertj-core:3.27.3")
   testImplementation("org.wiremock:wiremock:3.12.1")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-14")
+  
   testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.5"))
   testImplementation("org.testcontainers:testcontainers")
   testImplementation("org.testcontainers:junit-jupiter")
