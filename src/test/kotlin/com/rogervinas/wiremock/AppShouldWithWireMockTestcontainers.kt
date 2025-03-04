@@ -24,14 +24,14 @@ class AppShouldWithWireMockTestcontainers {
     @Container
     @JvmStatic
     val containerFoo =
-      WireMockContainer("wiremock/wiremock:3.2.0")
+      WireMockContainer("wiremock/wiremock:3.12.1")
         .withMappingFromJSON(File("wiremock/foo-api/mappings/foo-get.json").readText())
         .withCliArg("--global-response-templating")
 
     @Container
     @JvmStatic
     val containerBar =
-      WireMockContainer("wiremock/wiremock:3.2.0")
+      WireMockContainer("wiremock/wiremock:3.12.1")
         .withMappingFromJSON(File("wiremock/bar-api/mappings/bar-get.json").readText())
         .withCliArg("--global-response-templating")
   }

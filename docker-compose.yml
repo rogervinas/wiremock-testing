@@ -1,7 +1,7 @@
 services:
 
   foo-api:
-    image: wiremock/wiremock:3.12.0
+    image: wiremock/wiremock:3.12.1
     ports:
       - "8080"
     command:
@@ -10,7 +10,7 @@ services:
       - ./wiremock/foo-api:/home/wiremock
 
   bar-api:
-    image: wiremock/wiremock:3.12.0
+    image: wiremock/wiremock:3.12.1
     ports:
       - "8080"
     command:
