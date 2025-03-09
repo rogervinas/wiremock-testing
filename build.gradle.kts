@@ -30,7 +30,7 @@ dependencies {
   testImplementation("org.wiremock:wiremock:3.12.1")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-14")
 
-  testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.5"))
+  testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.6"))
   testImplementation("org.testcontainers:testcontainers")
   testImplementation("org.testcontainers:junit-jupiter")
 }
