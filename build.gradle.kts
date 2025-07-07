@@ -13,7 +13,7 @@ repositories {
   mavenCentral()
 }
 
-val ktorClientVersion = "3.2.0"
+val ktorClientVersion = "3.2.1"
 
 dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -21,7 +21,7 @@ dependencies {
   implementation("io.ktor:ktor-client-core:$ktorClientVersion")
   implementation("io.ktor:ktor-client-cio:$ktorClientVersion")
 
-  testImplementation(platform("org.junit:junit-bom:5.13.2"))
+  testImplementation(platform("org.junit:junit-bom:5.13.3"))
   testImplementation("org.junit.jupiter:junit-jupiter")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
