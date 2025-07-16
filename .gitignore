@@ -8,3 +8,4 @@ build
 .idea
 *.iml
 .kotlin
+bin

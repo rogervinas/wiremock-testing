@@ -7,7 +7,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import kotlinx.coroutines.runBlocking
 
-class FooKtorClient(private val url: String) : FooClient {
+class FooKtorClient(
+  private val url: String,
+) : FooClient {
   private val client =
     HttpClient(CIO) {
       expectSuccess = true
@@ -16,9 +18,10 @@ class FooKtorClient(private val url: String) : FooClient {
   override fun call(name: String): String =
     runBlocking {
       try {
-        client.get("$url/foo") {
-          parameter("name", name)
-        }.body<String>()
+        client
+          .get("$url/foo") {
+            parameter("name", name)
+          }.body<String>()
       } catch (e: Exception) {
         "Foo api error: ${e.message}"
       }

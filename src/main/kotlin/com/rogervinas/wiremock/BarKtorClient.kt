@@ -6,7 +6,9 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
 import kotlinx.coroutines.runBlocking
 
-class BarKtorClient(private val url: String) : BarClient {
+class BarKtorClient(
+  private val url: String,
+) : BarClient {
   private val client =
     HttpClient(CIO) {
       expectSuccess = true
