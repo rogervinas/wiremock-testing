@@ -4,7 +4,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 plugins {
-  kotlin("jvm") version "2.2.20"
+  kotlin("jvm") version "2.2.21"
   id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
   application
 }
@@ -13,7 +13,7 @@ repositories {
   mavenCentral()
 }
 
-val ktorClientVersion = "3.3.0"
+val ktorClientVersion = "3.3.1"
 
 dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
