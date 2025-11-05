@@ -21,7 +21,7 @@ dependencies {
   implementation("io.ktor:ktor-client-core:$ktorClientVersion")
   implementation("io.ktor:ktor-client-cio:$ktorClientVersion")
 
-  testImplementation(platform("org.junit:junit-bom:6.0.0"))
+  testImplementation(platform("org.junit:junit-bom:6.0.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -30,9 +30,9 @@ dependencies {
   testImplementation("org.wiremock:wiremock:3.13.1")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-15")
 
-  testImplementation(platform("org.testcontainers:testcontainers-bom:1.21.3"))
+  testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.1"))
   testImplementation("org.testcontainers:testcontainers")
-  testImplementation("org.testcontainers:junit-jupiter")
+  testImplementation("org.testcontainers:testcontainers-junit-jupiter")
 }
 
 java {
