@@ -37,7 +37,6 @@ class AppShouldWithComposeTestcontainers {
     @JvmStatic
     val container =
       ComposeContainer(File("docker-compose.yml"))
-        .withLocalCompose(true)
         .withExposedService(FOO_SERVICE_NAME, FOO_SERVICE_PORT, forListeningPort())
         .withExposedService(BAR_SERVICE_NAME, BAR_SERVICE_PORT, forListeningPort())
 
