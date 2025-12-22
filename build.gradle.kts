@@ -4,7 +4,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 plugins {
-  kotlin("jvm") version "2.2.21"
+  kotlin("jvm") version "2.3.0"
   id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
   application
 }
@@ -30,7 +30,7 @@ dependencies {
   testImplementation("org.wiremock:wiremock:3.13.2")
   testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-15")
 
-  testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.2"))
+  testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.3"))
   testImplementation("org.testcontainers:testcontainers")
   testImplementation("org.testcontainers:testcontainers-junit-jupiter")
 }
